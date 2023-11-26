@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'AlexGThess'
 description 'Police Chase with NPC Kill Detection Script'
-version '1.0.0'
+version '2.0'
 
 client_script 'client.lua'
 server_script 'server.lua'
