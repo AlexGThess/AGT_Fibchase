@@ -10,6 +10,10 @@ AddEventHandler('police_chase:playerIsShooting', function(shooting)
     isShooting = shooting
 end)
 
+RegisterNetEvent('police:SetCopCount', function(amount)
+     CurrentCops = amount
+end)
+
 Citizen.CreateThread(function()
     while true do
         Wait(0)
@@ -22,11 +26,10 @@ Citizen.CreateThread(function()
             isShooting = false
         end
 
-        if isShooting and not spawnedPed and not officerDead then
+        if isShooting and not spawnedPed and not officerDead and CurrentCops == 0 then
             local pos = GetEntityCoords(playerPed, true)
-            local spawnPos = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 100.0, 0.0)
+           -- local spawnPos = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 100.0, 0.0)
 
-            -- Check if any player with the job "police" is on duty
             SpawnPolice(pos.x, pos.y, pos.z)
             isShooting = false
             spawnedPed = true
@@ -46,7 +49,7 @@ function SpawnPolice(x, y, z)
     local playerID = PlayerId()
     local playerPed = GetPlayerPed(playerID)
 
-    local spawnPos = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 100.0, 0.0)
+    --local spawnPos = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, 100.0, 0.0)
 
     local vehicleHash = GetHashKey('fbi')
     RequestModel(vehicleHash)
@@ -54,7 +57,7 @@ function SpawnPolice(x, y, z)
         Wait(500)
     end
 
-    vehicle = CreateVehicle(vehicleHash, 407.5, -1005.32, 29.27, 124.79, true, false)
+    vehicle = CreateVehicle(vehicleHash, 424.96, -1068.39, 29.21, 86.94, true, false)
 
     -- Start the siren and lights
     SetVehicleSiren(vehicle, true)
@@ -63,7 +66,7 @@ function SpawnPolice(x, y, z)
     
     TaskWarpPedIntoVehicle(officerPed, vehicle, -1)
 
-    GiveWeaponToPed(officerPed, GetHashKey("weapon_smg"), 200, false, true)
+    GiveWeaponToPed(officerPed, GetHashKey("weapon_appistol"), 200, false, true)
 
     SetPedArmour(officerPed, 75)
 
@@ -73,7 +76,7 @@ function SpawnPolice(x, y, z)
     SetBlipSprite(blip, 56)
     SetBlipColour(blip, 3)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Police ChasingCar")
+    AddTextComponentString("Police Chasing")
     EndTextCommandSetBlipName(blip)
 
     while not IsVehicleStopped(vehicle) do
