@@ -1,5 +1,5 @@
 
-RegisterServerEvent('npc_kill:checkForNPCDeath')
+--[[RegisterServerEvent('npc_kill:checkForNPCDeath')
 AddEventHandler('npc_kill:checkForNPCDeath', function(npcPed)
     local playerPed = GetPlayerPed(source)
     local originalWantedLevel = GetPlayerWantedLevel(source)
@@ -13,5 +13,5 @@ AddEventHandler('npc_kill:checkForNPCDeath', function(npcPed)
         TriggerClientEvent('police_chase:spawnPolice', -1, pos.x, pos.y, pos.z)
     end
 end)
-
+]]
 
